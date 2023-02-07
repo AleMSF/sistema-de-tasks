@@ -21,7 +21,7 @@ public class Tarefa {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String nome;
+    private Long usuarioId;
     private LocalDate data;
     private String descricao;
     private Integer duracaoMin;

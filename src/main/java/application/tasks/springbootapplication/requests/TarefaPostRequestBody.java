@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class TarefaPostRequestBody {
     @NotEmpty
     private Long id;
-    private String nome;
+    private Long usuarioId;
     private String descricao;
     private Integer duracaoMin;
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
