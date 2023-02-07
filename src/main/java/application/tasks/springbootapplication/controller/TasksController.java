@@ -21,7 +21,7 @@ import java.util.List;
 public class TasksController {
     private final TarefaService tarefaService;
 
-    @PostMapping(path = "/usuario/{id}")
+    @PostMapping(path = "/usuario/{usuarioId}")
     public void listTodasTarefasDoUsuario(@PathVariable @NotNull Long usuarioId) {
         System.out.println(usuarioId);
     }
