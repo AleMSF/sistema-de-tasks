@@ -22,8 +22,8 @@ public class TasksController {
     private final TarefaService tarefaService;
 
     @PostMapping(path = "/usuario/{usuarioId}")
-    public void listTodasTarefasDoUsuario(@PathVariable @NotNull Long usuarioId) {
-        System.out.println(usuarioId);
+    public ResponseEntity<List<Tarefa>> listTodasTarefasDoUsuario(@PathVariable @NotNull Long usuarioId) {
+        return new ResponseEntity<>(tarefaService.listAllById(usuarioId), HttpStatus.OK);
     }
 
     @PostMapping(path = "/tarefa")

@@ -9,7 +9,6 @@ import application.tasks.springbootapplication.requests.UsuarioPostRequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -20,17 +19,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TarefaService {
     private final TarefaRepository tarefaRepository;
+  
 
-    public List<Tarefa> listAll(Long usuarioId) {
+    public List<Tarefa> listAllById(Long usuarioId) {
         List<Tarefa> tarefas = tarefaRepository.findAll();
         List<Tarefa> tarefasDoUsuario = new ArrayList<>();
 
         for (Tarefa tarefa : tarefas) {
-            if (tarefa.getId().equals(usuarioId)){
+            if (tarefa.getUsuarioId().equals(usuarioId)){
                 tarefasDoUsuario.add(tarefa);
             }
         }
-
 
         return tarefasDoUsuario;
     }
