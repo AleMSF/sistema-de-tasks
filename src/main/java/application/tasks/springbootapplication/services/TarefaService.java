@@ -1,6 +1,7 @@
 package application.tasks.springbootapplication.services;
 
 import application.tasks.springbootapplication.domain.Tarefa;
+import application.tasks.springbootapplication.domain.TarefaDTO;
 import application.tasks.springbootapplication.domain.Usuario;
 import application.tasks.springbootapplication.repository.TarefaRepository;
 import application.tasks.springbootapplication.repository.UsuarioRepository;
@@ -19,19 +20,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TarefaService {
     private final TarefaRepository tarefaRepository;
-  
+    private final UsuarioRepository usuarioRepository;
 
-    public List<Tarefa> listAllById(Long usuarioId) {
+    public List<TarefaDTO> listAllById(Long usuarioId) {
         List<Tarefa> tarefas = tarefaRepository.findAll();
-        List<Tarefa> tarefasDoUsuario = new ArrayList<>();
+        List<TarefaDTO> tarefaDTOS = new ArrayList<>();
+
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new ResponseStatusException((HttpStatus.BAD_REQUEST), "Usuario not found"));
 
         for (Tarefa tarefa : tarefas) {
             if (tarefa.getUsuarioId().equals(usuarioId)){
-                tarefasDoUsuario.add(tarefa);
+                TarefaDTO tarefaDTO = TarefaDTO.builder()
+                        .id(tarefa.getId())
+                        .nome(usuario.getNome())
+                        .descricao(tarefa.getDescricao())
+                        .duracaoMin(tarefa.getDuracaoMin()).build();
+                tarefaDTOS.add(tarefaDTO);
             }
         }
-
-        return tarefasDoUsuario;
+        return tarefaDTOS;
     }
 
     public Tarefa saveTarefa(TarefaPostRequestBody tarefaPostRequestBody) {
@@ -43,8 +51,6 @@ public class TarefaService {
                 .descricao(tarefaPostRequestBody.getDescricao())
                 .build());
     }
-
-    private final UsuarioRepository usuarioRepository;
 
     public Usuario saveUser(UsuarioPostRequestBody usuarioPostRequestBody) {
         return usuarioRepository.save(Usuario.builder()
@@ -70,6 +76,4 @@ public class TarefaService {
     public void deleteUsuario(Long id) {
         usuarioRepository.delete(findByIdUsuario(id));
     }
-
-
 }

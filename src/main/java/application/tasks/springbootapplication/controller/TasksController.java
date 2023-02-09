@@ -1,6 +1,7 @@
 package application.tasks.springbootapplication.controller;
 
 import application.tasks.springbootapplication.domain.Tarefa;
+import application.tasks.springbootapplication.domain.TarefaDTO;
 import application.tasks.springbootapplication.domain.Usuario;
 import application.tasks.springbootapplication.requests.TarefaPostRequestBody;
 import application.tasks.springbootapplication.requests.UsuarioPostRequestBody;
@@ -22,7 +23,7 @@ public class TasksController {
     private final TarefaService tarefaService;
 
     @PostMapping(path = "/usuario/{usuarioId}")
-    public ResponseEntity<List<Tarefa>> listTodasTarefasDoUsuario(@PathVariable @NotNull Long usuarioId) {
+    public ResponseEntity<List<TarefaDTO>> listTodasTarefasDoUsuario(@PathVariable @NotNull Long usuarioId) {
         return new ResponseEntity<>(tarefaService.listAllById(usuarioId), HttpStatus.OK);
     }
 
@@ -47,6 +48,4 @@ public class TasksController {
         tarefaService.deleteTarefa(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-
 }
